@@ -1,0 +1,386 @@
+.auth-container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    background-color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    width: 100%;
+    max-width: 600px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 640px) {
+    .auth-card {
+        padding: 1.5rem;
+    }
+}
+
+.dark .auth-card {
+    background-color: #1f2937;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1rem;
+}
+
+.auth-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #4c1d95;
+}
+
+.dark .auth-title {
+    color: #a78bfa;
+}
+
+.auth-subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+.dark .auth-subtitle {
+    color: #9ca3af;
+}
+
+.registration-type-toggle,
+.login-type-toggle {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark .registration-type-toggle,
+.dark .login-type-toggle {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    background-color: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #6b7280;
+    border-bottom: 3px solid transparent;
+}
+
+.dark .toggle-btn {
+    background-color: #374151;
+    color: #9ca3af;
+}
+
+.toggle-btn.active {
+    background-color: #ffffff;
+    color: #6d28d9;
+    border-bottom: 3px solid #6d28d9;
+}
+
+.dark .toggle-btn.active {
+    background-color: #1f2937;
+    color: #a78bfa;
+    border-bottom: 3px solid #a78bfa;
+}
+
+.auth-form {
+    margin-bottom: 1.5rem;
+}
+
+.auth-form.hidden {
+    display: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.dark label {
+    color: #e5e7eb;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: #9ca3af;
+}
+
+.dark .input-icon {
+    color: #6b7280;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9fafb;
+}
+
+.dark .form-input {
+    border-color: #4b5563;
+    background-color: #374151;
+    color: #e5e7eb;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #6d28d9;
+    box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1);
+}
+
+.dark .form-input:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.dark .toggle-password {
+    color: #6b7280;
+}
+
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.strength-meter {
+    height: 4px;
+    background-color: #e5e7eb;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.dark .strength-meter {
+    background-color: #4b5563;
+}
+
+.strength-meter-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.strength-meter-fill[data-strength="0"] {
+    width: 0%;
+}
+
+.strength-meter-fill[data-strength="1"] {
+    width: 25%;
+    background-color: #ef4444;
+}
+
+.strength-meter-fill[data-strength="2"] {
+    width: 50%;
+    background-color: #f59e0b;
+}
+
+.strength-meter-fill[data-strength="3"] {
+    width: 75%;
+    background-color: #10b981;
+}
+
+.strength-meter-fill[data-strength="4"] {
+    width: 100%;
+    background-color: #059669;
+}
+
+.strength-text {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    color: #6b7280;
+}
+
+.dark .strength-text {
+    color: #9ca3af;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 0.5rem;
+}
+
+.forgot-password a {
+    font-size: 0.875rem;
+    color: #6d28d9;
+    text-decoration: none;
+}
+
+.dark .forgot-password a {
+    color: #a78bfa;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.submit-btn,
+.cancel-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: #6d28d9;
+    color: white;
+    border: none;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.submit-btn:hover {
+    background-color: #5b21b6;
+    transform: translateY(-2px);
+}
+
+.cancel-btn {
+    background-color: transparent;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+    flex: 1;
+}
+
+.dark .cancel-btn {
+    color: #e5e7eb;
+    border-color: #4b5563;
+}
+
+.cancel-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .cancel-btn:hover {
+    background-color: #374151;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.dark .auth-footer {
+    color: #9ca3af;
+}
+
+.auth-footer a {
+    color: #6d28d9;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.dark .auth-footer a {
+    color: #a78bfa;
+}
+
+.error-message,
+.success-message {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.dark .error-message {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.success-message {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.dark .success-message {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.input-error {
+    border-color: #ef4444 !important;
+    animation: shake 0.4s ease-in-out;
+}
+
+.dark .input-error {
+    border-color: #f87171 !important;
+}

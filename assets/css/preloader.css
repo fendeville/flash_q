@@ -1,0 +1,229 @@
+.preloader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    z-index: 9999;
+}
+
+.preloader-content {
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin-right: 1rem;
+    animation: pulse 2s infinite;
+}
+
+.logo-text {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.animation-container {
+    height: 120px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.queue-animation {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.person {
+    position: absolute;
+    width: 30px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    bottom: 20px;
+}
+
+.person::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    top: -15px;
+    left: 5px;
+}
+
+.person1 {
+    left: 70%;
+    animation: movePerson1 10s infinite;
+}
+
+.person2 {
+    left: 55%;
+    animation: movePerson2 10s infinite;
+}
+
+.person3 {
+    left: 40%;
+    animation: movePerson3 10s infinite;
+}
+
+.counter {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: #4f46e5;
+    border: 3px solid white;
+    border-radius: 8px;
+    left: 15%;
+    top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.counter::before {
+    content: '001';
+    animation: counterChange 10s infinite;
+}
+
+.tagline {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.start-button {
+    background-color: white;
+    color: #4f46e5;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1s;
+}
+
+.start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes movePerson1 {
+    0%, 20% {
+        left: 70%;
+        opacity: 1;
+    }
+    30%, 100% {
+        left: 15%;
+        opacity: 0;
+    }
+}
+
+@keyframes movePerson2 {
+    0%, 30% {
+        left: 55%;
+        opacity: 1;
+    }
+    40%, 100% {
+        left: 15%;
+        opacity: 0;
+    }
+}
+
+@keyframes movePerson3 {
+    0%, 40% {
+        left: 40%;
+        opacity: 1;
+    }
+    50%, 100% {
+        left: 15%;
+        opacity: 0;
+    }
+}
+
+@keyframes counterChange {
+    0%, 30% {
+        content: '001';
+    }
+    33%, 60% {
+        content: '002';
+    }
+    63%, 90% {
+        content: '003';
+    }
+    93%, 100% {
+        content: 'NEXT';
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo-text {
+        font-size: 2.5rem;
+    }
+    
+    .animation-container {
+        height: 100px;
+    }
+}
