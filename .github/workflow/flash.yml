@@ -1,0 +1,76 @@
+name: flash
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  development:
+    name: Development Workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, mysqli
+          coverage: none
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Set Up Database
+        run: |
+          mysql -u root -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS flash_q;"
+          mysql -u root -p${{ secrets.DB_PASSWORD }} flash_q < database.sql
+
+      - name: Run Tests
+        run: ./vendor/bin/phpunit --configuration phpunit.xml
+
+  deployment:
+    name: Deployment Workflow
+    runs-on: ubuntu-latest
+    needs: development
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          rsync -avz --exclude '.git' ./ user@your-server:/var/www/flash_q
+          ssh user@your-server "cd /var/www/flash_q && composer install"
+
+      - name: Set Permissions
+        run: ssh user@your-server "chmod -R 755 /var/www/flash_q && chmod -R 777 /var/www/flash_q/uploads"
+
+  maintenance:
+    name: Maintenance Workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Monitor Application
+        run: echo "Monitoring application with external tools like New Relic or UptimeRobot."
+
+      - name: Update Dependencies
+        run: composer update
+
+      - name: Backup Database
+        run: mysqldump -u root -p${{ secrets.DB_PASSWORD }} flash_q > backup.sql
+
+      - name: Add New Features
+        run: |
+          git checkout -b feature-name
+          # Add your feature implementation here
+          git commit -am "Add new feature"
+          git push origin feature-name
