@@ -18,11 +18,16 @@ include '../includes/header.php';
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
 
-// Fetch current settings (placeholder for database integration)
-$settings = [
-    'site_name' => 'Flash.Q',
-    'admin_email' => 'admin@flashq.com',
-];
+// Fetch current settings from database
+$settings = getAllSettings();
+
+// Set defaults if not found
+if (!isset($settings['site_name'])) {
+    $settings['site_name'] = 'Flash.Q';
+}
+if (!isset($settings['admin_email'])) {
+    $settings['admin_email'] = 'admin@flashq.com';
+}
 ?>
 
 <div class="admin-container">
