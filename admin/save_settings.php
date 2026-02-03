@@ -67,10 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
         }
     } catch (Exception $e) {
+        // Log the detailed error for debugging (in production, use proper logging)
+        error_log("Settings save error: " . $e->getMessage());
+        
         http_response_code(500);
         echo json_encode([
             'success' => false,
-            'message' => 'An error occurred: ' . $e->getMessage()
+            'message' => 'An error occurred while saving settings. Please try again later.'
         ]);
     }
 } else {
