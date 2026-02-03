@@ -21,41 +21,46 @@ header('Content-Type: application/json');
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // Get POST data
-        $siteName = $_POST['site_name'] ?? '';
-        $adminEmail = $_POST['admin_email'] ?? '';
+        // Define settings with their validation rules
+        $settingsConfig = [
+            'site_name' => [
+                'value' => $_POST['site_name'] ?? '',
+                'required' => true,
+                'validator' => function($value) {
+                    return !empty($value);
+                },
+                'error_message' => 'Site name is required'
+            ],
+            'admin_email' => [
+                'value' => $_POST['admin_email'] ?? '',
+                'required' => true,
+                'validator' => function($value) {
+                    return !empty($value) && filter_var($value, FILTER_VALIDATE_EMAIL);
+                },
+                'error_message' => 'Valid admin email is required'
+            ]
+        ];
         
-        // Validate inputs
-        if (empty($siteName)) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Site name is required'
-            ]);
-            exit;
+        // Validate all settings
+        foreach ($settingsConfig as $key => $config) {
+            if ($config['required'] && !$config['validator']($config['value'])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => $config['error_message']
+                ]);
+                exit;
+            }
         }
         
-        if (empty($adminEmail) || !filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Valid admin email is required'
-            ]);
-            exit;
+        // Save all settings
+        $failedSettings = [];
+        foreach ($settingsConfig as $key => $config) {
+            if (!updateSetting($key, $config['value'])) {
+                $failedSettings[] = $key;
+            }
         }
         
-        // Save settings
-        $success = true;
-        
-        // Update site name
-        if (!updateSetting('site_name', $siteName)) {
-            $success = false;
-        }
-        
-        // Update admin email
-        if (!updateSetting('admin_email', $adminEmail)) {
-            $success = false;
-        }
-        
-        if ($success) {
+        if (empty($failedSettings)) {
             echo json_encode([
                 'success' => true,
                 'message' => 'Settings saved successfully'

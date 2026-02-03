@@ -410,17 +410,18 @@ function updateSetting($key, $value) {
     if ($existing) {
         // Update existing setting using parameterized query
         $sql = "UPDATE settings SET setting_value = :value, updated_at = NOW() WHERE setting_key = :key";
-        $db->query($sql, [
+        $stmt = $db->query($sql, [
             'value' => $value,
             'key' => $key
         ]);
-        return true;
+        return $stmt->rowCount() > 0;
     } else {
         // Insert new setting
-        return $db->insert('settings', [
+        $insertId = $db->insert('settings', [
             'setting_key' => $key,
             'setting_value' => $value
         ]);
+        return $insertId !== false && $insertId > 0;
     }
 }
 ?>
