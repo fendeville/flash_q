@@ -372,4 +372,56 @@ function formatTime($seconds) {
         return $minutes . " min";
     }
 }
+
+// Settings management functions
+function getSetting($key, $default = null) {
+    global $db;
+    
+    $setting = $db->selectOne(
+        "SELECT setting_value FROM settings WHERE setting_key = :key",
+        ['key' => $key]
+    );
+    
+    return $setting ? $setting['setting_value'] : $default;
+}
+
+function getAllSettings() {
+    global $db;
+    
+    $settingsArray = $db->select("SELECT setting_key, setting_value FROM settings");
+    $settings = [];
+    
+    foreach ($settingsArray as $setting) {
+        $settings[$setting['setting_key']] = $setting['setting_value'];
+    }
+    
+    return $settings;
+}
+
+function updateSetting($key, $value) {
+    global $db;
+    
+    // Check if setting exists
+    $existing = $db->selectOne(
+        "SELECT id FROM settings WHERE setting_key = :key",
+        ['key' => $key]
+    );
+    
+    if ($existing) {
+        // Update existing setting using parameterized query
+        $sql = "UPDATE settings SET setting_value = :value, updated_at = NOW() WHERE setting_key = :key";
+        $stmt = $db->query($sql, [
+            'value' => $value,
+            'key' => $key
+        ]);
+        return $stmt->rowCount() > 0;
+    } else {
+        // Insert new setting
+        $insertId = $db->insert('settings', [
+            'setting_key' => $key,
+            'setting_value' => $value
+        ]);
+        return $insertId !== false && $insertId > 0;
+    }
+}
 ?>
